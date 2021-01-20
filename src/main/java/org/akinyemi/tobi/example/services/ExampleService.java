@@ -18,8 +18,9 @@ public class ExampleService extends ExampleServiceGrpc.ExampleServiceImplBase {
         responseObserver.onCompleted();
     }
 
-    @Override public void stream(Empty request, StreamObserver<Empty> responseObserver) {
-        log.info("endpoint reached - doing nothing");
+    @Override
+    public void stream(Empty request, StreamObserver<Empty> responseObserver) {
+        log.info("stream reached");
         for (int i = 0; i < 10; i++) {
             try {
                 Thread.sleep(1000);
@@ -28,6 +29,7 @@ public class ExampleService extends ExampleServiceGrpc.ExampleServiceImplBase {
                 responseObserver.onError(e);
                 return;
             }
+            log.info("sending response {}", i);
             responseObserver.onNext(Empty.newBuilder().build());
         }
         responseObserver.onCompleted();
