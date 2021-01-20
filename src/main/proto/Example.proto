@@ -4,5 +4,6 @@ import "google/protobuf/empty.proto";
 
 service ExampleService {
   rpc endpoint(google.protobuf.Empty) returns (google.protobuf.Empty){};
+  rpc stream(google.protobuf.Empty) returns (stream google.protobuf.Empty){};
 }
 

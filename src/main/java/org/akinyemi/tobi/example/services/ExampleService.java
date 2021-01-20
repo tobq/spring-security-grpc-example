@@ -1,22 +1,35 @@
 package org.akinyemi.tobi.example.services;
 
-import lombok.extern.slf4j.Slf4j;
 import org.akinyemi.tobi.example.ExampleServiceGrpc;
 import org.lognet.springboot.grpc.GRpcService;
-import org.springframework.security.access.annotation.Secured;
 
 import com.google.protobuf.Empty;
 
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @GRpcService
 public class ExampleService extends ExampleServiceGrpc.ExampleServiceImplBase {
-    @Secured("SCOPE_monitoring:consent:write")
     @Override
     public void endpoint(Empty request, StreamObserver<Empty> responseObserver) {
         log.info("endpoint reached - doing nothing");
         responseObserver.onNext(Empty.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
+    @Override public void stream(Empty request, StreamObserver<Empty> responseObserver) {
+        log.info("endpoint reached - doing nothing");
+        for (int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                log.error("stream processing interrupted", e);
+                responseObserver.onError(e);
+                return;
+            }
+            responseObserver.onNext(Empty.newBuilder().build());
+        }
         responseObserver.onCompleted();
     }
 }
