@@ -1,0 +1,8 @@
+package org.akinyemi.tobi.example;
+
+import "google/protobuf/empty.proto";
+
+service ExampleService {
+  rpc endpoint(google.protobuf.Empty) returns (google.protobuf.Empty){};
+}
+
