@@ -21,7 +21,7 @@ public class ExampleService extends ExampleServiceGrpc.ExampleServiceImplBase {
     @Override
     public void stream(Empty request, StreamObserver<Empty> responseObserver) {
         log.info("stream reached");
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
