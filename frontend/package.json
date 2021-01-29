@@ -1,0 +1,68 @@
+{
+  "name": "grpc-boilerplate",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt-ts",
+    "build": "nuxt-ts build",
+    "start": "nuxt-ts start",
+    "generate": "nuxt-ts generate",
+    "lint": "eslint \"**/*.{js,vue,ts}\"",
+    "lint:fix": "eslint --fix \"**/*.{js,ts,vue}\"",
+    "test": "jest",
+    "proto:grpc-web": "mkdirp proto && protoc --plugin=\"protoc-gen-ts=./node_modules/.bin/protoc-gen-ts\" --proto_path=../backend/src/main/proto $(find ../backend/src/main/proto/ -iname \"*.proto\") --js_out=\"import_style=commonjs,binary:proto\" --ts_out=\"service=grpc-web:proto\"",
+    "proto:docker": "mkdirp proto && protoc --proto_path=./proto-files $(find ./proto-files/ -iname \"*.proto\") --js_out=\"import_style=commonjs,binary:proto\" --ts_out=\"service=grpc-web:proto\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged --allow-empty"
+    }
+  },
+  "lint-staged": {
+    "*.(js|ts|vue)": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@improbable-eng/grpc-web": "^0.13.0",
+    "@nuxt/typescript-runtime": "^2.0.0",
+    "@types/google-protobuf": "^3.7.4",
+    "core-js": "^3.6.5",
+    "google-protobuf": "^3.14.0",
+    "grpc": "^1.24.4",
+    "grpc-web": "^1.2.1",
+    "mkdirp": "^1.0.4",
+    "nuxt": "^2.14.6",
+    "oidc-client": "^1.11.0",
+    "protobufjs": "^6.10.2",
+    "protoc-gen-grpc-web": "^1.2.1",
+    "ts-proto": "^1.51.0",
+    "ts-protoc-gen": "^0.14.0",
+    "vue-class-component": "^7.2.6",
+    "vue-property-decorator": "^9.1.2",
+    "vuex-class": "^0.3.2"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^2.14.6",
+    "@nuxt/typescript-build": "^2.0.3",
+    "@nuxtjs/eslint-config": "^3.1.0",
+    "@nuxtjs/eslint-config-typescript": "^3.0.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "@vue/test-utils": "^1.1.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.5.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^7.3.0",
+    "husky": "^4.3.6",
+    "jest": "^26.5.0",
+    "node-sass": "^5.0.0",
+    "prettier": "^2.1.2",
+    "sass-loader": "^10.1.0",
+    "ts-jest": "^26.4.1",
+    "vue-jest": "^3.0.4"
+  }
+}
