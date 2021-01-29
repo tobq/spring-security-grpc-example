@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  grpc_gateway:
+    image: envoyproxy/envoy:v1.14-latest
+    ports:
+#      - "9901:9901"
+      - "10000:10000"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+#  grpc_service:
+#    build: build/docker
