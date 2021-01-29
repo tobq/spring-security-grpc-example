@@ -28,7 +28,7 @@ type ExampleServicegreet = {
   readonly service: typeof ExampleService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof Example_pb.GreetRequest;
+  readonly requestType: typeof google_protobuf_empty_pb.Empty;
   readonly responseType: typeof Example_pb.GreetResponse;
 };
 
@@ -90,12 +90,12 @@ export class ExampleServiceClient {
     callback: (error: ServiceError|null, responseMessage: google_protobuf_empty_pb.Empty|null) => void
   ): UnaryResponse;
   greet(
-    requestMessage: Example_pb.GreetRequest,
+    requestMessage: google_protobuf_empty_pb.Empty,
     metadata: grpc.Metadata,
     callback: (error: ServiceError|null, responseMessage: Example_pb.GreetResponse|null) => void
   ): UnaryResponse;
   greet(
-    requestMessage: Example_pb.GreetRequest,
+    requestMessage: google_protobuf_empty_pb.Empty,
     callback: (error: ServiceError|null, responseMessage: Example_pb.GreetResponse|null) => void
   ): UnaryResponse;
 }

@@ -35,9 +35,19 @@ export async function logout() {
   return userManager.signoutRedirect();
 }
 
+async function sleep(millis: number) {
+  return new Promise<void>(res => {
+    setTimeout(() => res(), millis);
+  })
+}
+
 export async function getAccessToken() {
   let user = await userManager.getUser();
-  while (user == null) await login();
+  while (user == null) {
+    await login();
+    console.log("Sleeping following a lack of redirection after login");
+    await sleep(1000);
+  }
   return user.access_token;
 }
 

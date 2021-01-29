@@ -1,15 +1,16 @@
 <template>
   <div class="container">
     <div>
-      <h1 class="title">GRPC-boilerplate</h1>
+      <h1 class="title">Vue GRPC + PKCE Oauth Flow </h1>
       <div class="">
-        <button @click="testGrpc">Test</button>
-        <button @click="testGrpcAuth">Test Auth</button>
+        <button @click="testGrpc">Test Grpc</button>
+        <button @click="testGrpcAuth">Test Secured Method</button>
         <br/>
         <label>Name: </label>
         <span>{{ currentUser }}</span>
-        <button @click="greet">Greet</button>
+        <button @click="greet">Greet Me</button>
         <p>{{ greetingMessage }}</p>
+        <p>{{ debugMessage }}</p>
 
 
         <button class='btn' @click='login' v-if='!isLoggedIn'>Login</button>
@@ -27,28 +28,28 @@ import {getUser, login, logout} from "~/service/auth";
 @Component({})
 export default class HomePage extends Vue {
   public greetingMessage: string = '';
+  public debugMessage: string = '';
   private isLoggedIn: boolean = '';
   private accessTokenExpired: boolean = false;
   private currentUser: string = '';
 
   async testGrpc() {
-    try {
-      const res = await test();
-      console.log(res);
-      this.message = "GRPC Request submitted successfully";
-    } catch (e) {
-      this.message = "GRPC Request failed: " + e;
-    }
+    await this.tryGrpc(test);
   }
 
   async testGrpcAuth() {
+    await this.tryGrpc(testAuth);
+  }
+
+  private async tryGrpc<T>(req: () => Promise<T>) {
     try {
-      const res = await testAuth();
-      // const res = await testAuthUnary();
+      let res = await req();
       console.log(res);
-      this.message = "GRPC Request submitted successfully";
+      this.debugMessage = "GRPC Request submitted successfully";
+      return res;
     } catch (e) {
-      this.message = "GRPC Request failed: " + e;
+      console.log(e);
+      this.debugMessage = "GRPC Request failed: " + e;
     }
   }
 
@@ -62,11 +63,12 @@ export default class HomePage extends Vue {
 
   async greet() {
     try {
-      const greeting = await greet(this.currentUser);
+      const greeting = await greet();
       console.log(greeting);
       this.greetingMessage = greeting;
+      this.debugMessage = "GRPC Request submitted successfully";
     } catch (e) {
-      this.greetingMessage = "GRPC Request failed: " + e;
+      this.debugMessage = "GRPC Request failed: " + e;
     }
   }
 

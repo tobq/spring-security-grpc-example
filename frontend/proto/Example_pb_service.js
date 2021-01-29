@@ -34,7 +34,7 @@ ExampleService.greet = {
   service: ExampleService,
   requestStream: false,
   responseStream: false,
-  requestType: Example_pb.GreetRequest,
+  requestType: google_protobuf_empty_pb.Empty,
   responseType: Example_pb.GreetResponse
 };
 
