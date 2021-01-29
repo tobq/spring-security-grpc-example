@@ -6,4 +6,4 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://sandbox.iam.yapily.com/auth/realms/external
+          issuer-uri: https://sandbox.iam.yapily.com/auth/realms/internal
