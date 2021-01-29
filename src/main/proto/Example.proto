@@ -1,8 +1,15 @@
+syntax = "proto3";
+
 package org.akinyemi.tobi.example;
 
 import "google/protobuf/empty.proto";
 
 service ExampleService {
   rpc endpoint(google.protobuf.Empty) returns (google.protobuf.Empty){};
+  rpc endpointAuth(google.protobuf.Empty) returns (google.protobuf.Empty){};
+  rpc greet(google.protobuf.Empty) returns (GreetResponse){};
 }
 
+message GreetResponse {
+  string greeting = 1;
+}
