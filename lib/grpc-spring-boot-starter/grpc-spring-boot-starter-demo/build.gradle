@@ -1,0 +1,116 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation "org.springframework.security:spring-security-config"
+    implementation "org.springframework.security:spring-security-oauth2-jose"
+    implementation "org.springframework.security:spring-security-oauth2-resource-server"
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+    implementation project(':grpc-spring-boot-starter')
+    implementation project(':grpc-client-spring-boot-starter')
+
+    testCompile 'org.springframework.boot:spring-boot-starter-aop'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'com.github.stefanbirkner:system-rules:1.18.0'
+    testCompile('org.springframework.cloud:spring-cloud-starter-consul-discovery')
+    testCompile 'com.pszymczyk.consul:embedded-consul:2.1.4'
+    testCompile 'org.awaitility:awaitility:4.0.3'
+
+
+
+    testCompile "org.springframework.cloud:spring-cloud-config-server"
+    testCompile "org.springframework.cloud:spring-cloud-config-client"
+    testCompile "com.playtika.testcontainers:embedded-keycloak:1.76"
+    testCompile "org.springframework.cloud:spring-cloud-starter-bootstrap"
+
+
+    testImplementation 'org.hamcrest:hamcrest:2.1'
+
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+
+
+    //testCompile  "org.testcontainers:junit-jupiter:1.14.3"
+
+
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { details ->
+            if ("io.grpc".equalsIgnoreCase(details.requested.group)) {
+                details.useVersion grpcVersion
+            }
+    }
+}
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/protoGen'
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.5.1'
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+
+    generateProtoTasks {
+        ofSourceSet('main').each { task ->
+            task.builtins {
+                java {
+                    outputSubDir = 'protoGen'
+                }
+            }
+            task.plugins {
+                grpc {
+                    outputSubDir = 'protoGen'
+                }
+            }
+        }
+    }
+    generatedFilesBaseDir = "$projectDir/src/"
+}
+
+task cleanProtoGen {
+    doFirst {
+        delete("$projectDir/src/main/protoGen")
+    }
+}
+clean.dependsOn cleanProtoGen
+
+
+
+
+
+
+
