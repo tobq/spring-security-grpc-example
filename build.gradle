@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.2'
+    id 'org.springframework.boot' version "2.4.2"
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id "com.google.protobuf" version "0.8.14"
@@ -56,7 +56,7 @@ protobuf {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation project(":lib:grpc-spring-boot-starter") // TODO: update when this change is pushed to maven
+    implementation project(":lib:grpc-spring-boot-starter:grpc-spring-boot-starter") // TODO: update when this change is pushed to maven
                                                             //   https://github.com/LogNet/grpc-spring-boot-starter/issues/178
 //    implementation 'io.github.lognet:grpc-spring-boot-starter:4.4.3'
     implementation 'io.springfox:springfox-swagger2:3.0.0'
