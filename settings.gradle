@@ -1,2 +1,1 @@
 rootProject.name = 'grpc-security-example'
-include 'lib:grpc-spring-boot-starter:grpc-spring-boot-starter'

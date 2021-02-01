@@ -1,3 +1,0 @@
-grpc:
-  security:
-    cert-chain: classpath:cert/server-cert.pem

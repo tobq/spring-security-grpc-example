@@ -1,3 +1,0 @@
-grpc:
-  netty-server:
-    primary-listen-address: "localhost:"
