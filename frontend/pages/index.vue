@@ -29,7 +29,7 @@ import {getUser, login, logout} from "~/service/auth";
 export default class HomePage extends Vue {
   public greetingMessage: string = '';
   public debugMessage: string = '';
-  private isLoggedIn: boolean = '';
+  private isLoggedIn: boolean = false;
   private accessTokenExpired: boolean = false;
   private currentUser: string = '';
 
