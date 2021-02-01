@@ -11,7 +11,6 @@ export const userManagerSettings: any = {
   silent_redirect_uri: 'http://localhost:3000/silent-renew',
   response_type: 'code',
   scope: 'openid profile',
-  loadUserInfo: false, // TODO: issue with userinfo endpoint in the yapily IAM service
   post_logout_redirect_uri: 'http://localhost:3000/',
   response_mode: "query",
   filterProtocolClaims: true
